@@ -1,0 +1,71 @@
+{
+  "policies_dir": "/home/mst/projects/adag-test-infra/policies",
+  "total": 10,
+  "by_severity": {
+    "HIGH": 3,
+    "LOW": 2,
+    "MEDIUM": 5
+  },
+  "policies": [
+    {
+      "policy_id": "delete_protection",
+      "severity": "HIGH",
+      "title": "Deletion Protection Policy",
+      "file": "delete_protection.md"
+    },
+    {
+      "policy_id": "encryption_at_rest",
+      "severity": "HIGH",
+      "title": "Encryption at Rest Policy",
+      "file": "encryption_at_rest.md"
+    },
+    {
+      "policy_id": "public_access_block",
+      "severity": "HIGH",
+      "title": "Public Access Block Policy",
+      "file": "public_access_block.md"
+    },
+    {
+      "policy_id": "naming_conventions",
+      "severity": "LOW",
+      "title": "Naming Conventions Policy",
+      "file": "naming_conventions.md"
+    },
+    {
+      "policy_id": "required_tagging",
+      "severity": "LOW",
+      "title": "Required Tagging Policy",
+      "file": "required_tagging.md"
+    },
+    {
+      "policy_id": "allowed_regions",
+      "severity": "MEDIUM",
+      "title": "Allowed Regions Policy",
+      "file": "allowed_regions.md"
+    },
+    {
+      "policy_id": "automated_backups_enabled",
+      "severity": "MEDIUM",
+      "title": "Automated Backups Enabled Policy",
+      "file": "automated_backups_enabled.md"
+    },
+    {
+      "policy_id": "backup_retention",
+      "severity": "MEDIUM",
+      "title": "Backup Retention Policy",
+      "file": "backup_retention.md"
+    },
+    {
+      "policy_id": "kms_key_rotation",
+      "severity": "MEDIUM",
+      "title": "KMS Key Rotation Policy",
+      "file": "kms_key_rotation.md"
+    },
+    {
+      "policy_id": "multi_az_requirement",
+      "severity": "MEDIUM",
+      "title": "Multi-AZ Requirement Policy",
+      "file": "multi_az_requirement.md"
+    }
+  ]
+}

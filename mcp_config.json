@@ -1,0 +1,29 @@
+{
+  "_comment": "Claude Desktop MCP config — after running setup.sh, merge this block into ~/.config/claude/claude_desktop_config.json. Replace /absolute/path/to/adag-test-infra with the actual path where you cloned this repo.",
+  "mcpServers": {
+    "adag": {
+      "command": "/absolute/path/to/adag-test-infra/venv/bin/python",
+      "args": ["-m", "adag.mcp_server"],
+      "cwd": "/absolute/path/to/adag-test-infra",
+      "env": {
+        "AWS_PROFILE": "default",
+        "AWS_REGION": "us-east-1",
+        "USE_RAG": "false",
+        "POLICIES_DIR": "/absolute/path/to/adag-test-infra/policies"
+      }
+    },
+    "adag-with-rag": {
+      "_comment": "Use this variant when RAG microservices are running",
+      "command": "/absolute/path/to/adag-test-infra/venv/bin/python",
+      "args": ["-m", "adag.mcp_server"],
+      "cwd": "/absolute/path/to/adag-test-infra",
+      "env": {
+        "AWS_PROFILE": "default",
+        "AWS_REGION": "us-east-1",
+        "USE_RAG": "true",
+        "ADAG_APPID": "archapp",
+        "POLICIES_DIR": "/absolute/path/to/adag-test-infra/policies"
+      }
+    }
+  }
+}

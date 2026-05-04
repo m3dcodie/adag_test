@@ -1,0 +1,9 @@
+# Place your policy markdown files here.
+# Each file should be named after the policy it defines, e.g.:
+#   delete_protection.md
+#   encryption_at_rest.md
+#   backup_retention.md
+#   ...
+#
+# Copy from arch_agent/policies/ or write your own.
+# The POLICIES_DIR variable in .env points to this directory.

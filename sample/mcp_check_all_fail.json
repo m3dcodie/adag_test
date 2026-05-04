@@ -1,0 +1,230 @@
+{
+  "files_scanned": 1,
+  "total_violations": 21,
+  "results": [
+    {
+      "status": "failed",
+      "file_path": "/home/mst/projects/adag-test-infra/infrastructure/all_fail.tf",
+      "total_resources": 5,
+      "summary": "Found 21 violation(s) across 5 resource(s).",
+      "violation_counts": {
+        "total": 21,
+        "high": 6,
+        "medium": 7,
+        "low": 8
+      },
+      "violations": [
+        {
+          "id": "provider-aws-region-not-allowed",
+          "resource_type": "provider",
+          "resource_name": "aws",
+          "severity": "MEDIUM",
+          "policy_ref": "allowed_regions",
+          "description": "AWS provider region is set to 'ap-southeast-3', which is not in the approved region list (e.g., us-east-1, us-east-2, us-west-1, us-west-2).",
+          "line_number": 14,
+          "remediation_hint": "Set the provider region to an approved region such as 'us-east-1', 'us-east-2', 'us-west-1', or 'us-west-2'."
+        },
+        {
+          "id": "kms-key-no-rotation",
+          "resource_type": "aws_kms_key",
+          "resource_name": "BadKey_NoRotation",
+          "severity": "MEDIUM",
+          "policy_ref": "kms_key_rotation",
+          "description": "KMS key does not have automatic key rotation enabled ('enable_key_rotation' is false).",
+          "line_number": 21,
+          "remediation_hint": "Set 'enable_key_rotation = true' for this KMS key."
+        },
+        {
+          "id": "kms-key-naming-convention",
+          "resource_type": "aws_kms_key",
+          "resource_name": "BadKey_NoRotation",
+          "severity": "LOW",
+          "policy_ref": "naming_conventions",
+          "description": "KMS key tag 'Name' is 'bad-key', which contains a hyphen but the resource name 'BadKey_NoRotation' uses uppercase letters and underscores, violating naming conventions.",
+          "line_number": 21,
+          "remediation_hint": "Rename the resource and tags to use only lowercase letters and hyphens (e.g., 'bad-key-no-rotation')."
+        },
+        {
+          "id": "kms-key-missing-required-tags",
+          "resource_type": "aws_kms_key",
+          "resource_name": "BadKey_NoRotation",
+          "severity": "LOW",
+          "policy_ref": "required_tagging",
+          "description": "KMS key is missing required tags: 'Environment', 'Owner', and 'Application'.",
+          "line_number": 21,
+          "remediation_hint": "Add the required tags: 'Environment', 'Owner', and 'Application' to the KMS key."
+        },
+        {
+          "id": "db-instance-encryption-missing",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "HIGH",
+          "policy_ref": "encryption_at_rest",
+          "description": "RDS instance does not have encryption at rest enabled ('storage_encrypted' is false).",
+          "line_number": 35,
+          "remediation_hint": "Set 'storage_encrypted = true' for this RDS instance."
+        },
+        {
+          "id": "db-instance-deletion-protection-missing",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "HIGH",
+          "policy_ref": "delete_protection",
+          "description": "RDS instance does not have deletion protection enabled ('deletion_protection' is false).",
+          "line_number": 35,
+          "remediation_hint": "Set 'deletion_protection = true' for this RDS instance."
+        },
+        {
+          "id": "db-instance-backup-missing",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "MEDIUM",
+          "policy_ref": "automated_backups_enabled",
+          "description": "RDS instance does not have automated backups enabled ('backup_retention_period' is 0).",
+          "line_number": 35,
+          "remediation_hint": "Set 'backup_retention_period' to a value greater than 0 to enable automated backups."
+        },
+        {
+          "id": "db-instance-backup-retention-too-low",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "MEDIUM",
+          "policy_ref": "backup_retention",
+          "description": "RDS instance has 'backup_retention_period' set to 0, which is less than the required minimum of 7 days.",
+          "line_number": 35,
+          "remediation_hint": "Set 'backup_retention_period' to at least 7 days (30 days recommended for production)."
+        },
+        {
+          "id": "db-instance-multi-az-missing",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "MEDIUM",
+          "policy_ref": "multi_az_requirement",
+          "description": "RDS instance does not have Multi-AZ enabled ('multi_az' is false).",
+          "line_number": 35,
+          "remediation_hint": "Set 'multi_az = true' for high availability."
+        },
+        {
+          "id": "db-instance-publicly-accessible",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "HIGH",
+          "policy_ref": "public_access_block",
+          "description": "RDS instance is publicly accessible ('publicly_accessible' is true), which is not allowed.",
+          "line_number": 35,
+          "remediation_hint": "Set 'publicly_accessible = false' for this RDS instance."
+        },
+        {
+          "id": "db-instance-naming-convention",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "LOW",
+          "policy_ref": "naming_conventions",
+          "description": "RDS instance identifier 'BadDB_Unprotected' uses uppercase letters and underscores, violating naming conventions.",
+          "line_number": 35,
+          "remediation_hint": "Rename the identifier to use only lowercase letters and hyphens (e.g., 'bad-db-unprotected')."
+        },
+        {
+          "id": "db-instance-missing-required-tags",
+          "resource_type": "aws_db_instance",
+          "resource_name": "BadDB_Unprotected",
+          "severity": "LOW",
+          "policy_ref": "required_tagging",
+          "description": "RDS instance is missing required tags: 'Environment', 'Owner', and 'Application'.",
+          "line_number": 35,
+          "remediation_hint": "Add the required tags: 'Environment', 'Owner', and 'Application' to the RDS instance."
+        },
+        {
+          "id": "rds-cluster-encryption-missing",
+          "resource_type": "aws_rds_cluster",
+          "resource_name": "BadAurora_NoProtection",
+          "severity": "HIGH",
+          "policy_ref": "encryption_at_rest",
+          "description": "Aurora cluster does not have encryption at rest enabled ('storage_encrypted' is false).",
+          "line_number": 66,
+          "remediation_hint": "Set 'storage_encrypted = true' for this Aurora cluster."
+        },
+        {
+          "id": "rds-cluster-deletion-protection-missing",
+          "resource_type": "aws_rds_cluster",
+          "resource_name": "BadAurora_NoProtection",
+          "severity": "HIGH",
+          "policy_ref": "delete_protection",
+          "description": "Aurora cluster does not have deletion protection enabled ('deletion_protection' is false).",
+          "line_number": 66,
+          "remediation_hint": "Set 'deletion_protection = true' for this Aurora cluster."
+        },
+        {
+          "id": "rds-cluster-backup-missing",
+          "resource_type": "aws_rds_cluster",
+          "resource_name": "BadAurora_NoProtection",
+          "severity": "MEDIUM",
+          "policy_ref": "automated_backups_enabled",
+          "description": "Aurora cluster does not have automated backups enabled ('backup_retention_period' is 0).",
+          "line_number": 66,
+          "remediation_hint": "Set 'backup_retention_period' to a value greater than 0 to enable automated backups."
+        },
+        {
+          "id": "rds-cluster-backup-retention-too-low",
+          "resource_type": "aws_rds_cluster",
+          "resource_name": "BadAurora_NoProtection",
+          "severity": "MEDIUM",
+          "policy_ref": "backup_retention",
+          "description": "Aurora cluster has 'backup_retention_period' set to 0, which is less than the required minimum of 7 days.",
+          "line_number": 66,
+          "remediation_hint": "Set 'backup_retention_period' to at least 7 days."
+        },
+        {
+          "id": "rds-cluster-naming-convention",
+          "resource_type": "aws_rds_cluster",
+          "resource_name": "BadAurora_NoProtection",
+          "severity": "LOW",
+          "policy_ref": "naming_conventions",
+          "description": "Aurora cluster identifier 'BadAurora_NoProtection' uses uppercase letters and underscores, violating naming conventions.",
+          "line_number": 66,
+          "remediation_hint": "Rename the cluster_identifier to use only lowercase letters and hyphens (e.g., 'bad-aurora-no-protection')."
+        },
+        {
+          "id": "rds-cluster-missing-required-tags",
+          "resource_type": "aws_rds_cluster",
+          "resource_name": "BadAurora_NoProtection",
+          "severity": "LOW",
+          "policy_ref": "required_tagging",
+          "description": "Aurora cluster is missing required tags: 'Owner' and 'Application'.",
+          "line_number": 66,
+          "remediation_hint": "Add the required tags: 'Owner' and 'Application' to the Aurora cluster."
+        },
+        {
+          "id": "s3-bucket-missing-public-access-block",
+          "resource_type": "aws_s3_bucket",
+          "resource_name": "MyBucket_Public",
+          "severity": "HIGH",
+          "policy_ref": "public_access_block",
+          "description": "S3 bucket does not have a companion aws_s3_bucket_public_access_block resource to block public access.",
+          "line_number": 92,
+          "remediation_hint": "Add an 'aws_s3_bucket_public_access_block' resource for this bucket with all protections enabled."
+        },
+        {
+          "id": "s3-bucket-naming-convention",
+          "resource_type": "aws_s3_bucket",
+          "resource_name": "MyBucket_Public",
+          "severity": "LOW",
+          "policy_ref": "naming_conventions",
+          "description": "S3 bucket name 'MyBucket_Public' uses uppercase letters and underscores, violating naming conventions.",
+          "line_number": 92,
+          "remediation_hint": "Rename the bucket to use only lowercase letters and hyphens (e.g., 'mybucket-public')."
+        },
+        {
+          "id": "s3-bucket-missing-required-tags",
+          "resource_type": "aws_s3_bucket",
+          "resource_name": "MyBucket_Public",
+          "severity": "LOW",
+          "policy_ref": "required_tagging",
+          "description": "S3 bucket is missing required tags: 'Environment', 'Owner', and 'Application'.",
+          "line_number": 92,
+          "remediation_hint": "Add the required tags: 'Environment', 'Owner', and 'Application' to the S3 bucket."
+        }
+      ]
+    }
+  ]
+}

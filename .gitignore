@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Test / coverage
+.pytest_cache/
+.tox/
+coverage.xml
+.coverage
+htmlcov/
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Other
+*.sqlite3
+*.log
+.mypy_cache/
+*.pyc
+
+
+data/adag.db
+data/*

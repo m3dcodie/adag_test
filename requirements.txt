@@ -1,0 +1,4 @@
+# adag — AI-Driven Architecture Guardrail
+# Installed from the arch_agent Git repository.
+# setup.sh handles this automatically; you do not need to run pip manually.
+adag @ git+https://github.com/m3dcodie/arch_agent.git@feature/update-doco

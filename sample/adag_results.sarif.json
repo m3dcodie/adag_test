@@ -1,0 +1,498 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ADAG",
+          "version": "0.1.0",
+          "informationUri": "https://github.com/your-org/adag",
+          "rules": []
+        }
+      },
+      "results": [
+        {
+          "ruleId": "delete_protection",
+          "level": "error",
+          "message": {
+            "text": "The 'deletion_protection' attribute is missing for this production database instance. All production databases must have deletion protection enabled to prevent accidental deletion. Fix: Add 'deletion_protection = true' to the aws_db_instance resource."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/edge_cases.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 22
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "delete_protection",
+          "level": "error",
+          "message": {
+            "text": "The 'deletion_protection' attribute is explicitly set to false. All production databases must have deletion protection enabled to prevent accidental deletion. Fix: Set 'deletion_protection = true' in the aws_db_instance resource."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/edge_cases.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "automated_backups_enabled",
+          "level": "warning",
+          "message": {
+            "text": "Automated backups are disabled ('backup_retention_period' is 0). All production databases must have automated backups enabled. Fix: Set 'backup_retention_period' to a value greater than 0 to enable automated backups."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/edge_cases.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "backup_retention",
+          "level": "warning",
+          "message": {
+            "text": "Backup retention period is set to 0 days. All production databases must have a minimum backup retention period of 7 days. Fix: Set 'backup_retention_period' to at least 7 days (30 days recommended for production)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/edge_cases.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "automated_backups_enabled",
+          "level": "warning",
+          "message": {
+            "text": "Automated backups are disabled ('backup_retention_period' is 0). All production databases must have automated backups enabled, unless this is a read replica and backups are handled by the primary. Fix: If this is a standalone production database, set 'backup_retention_period' to a value greater than 0. If this is a read replica, ensure the primary has backups enabled."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/edge_cases.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 132
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "backup_retention",
+          "level": "warning",
+          "message": {
+            "text": "Backup retention period is set to 0 days. All production databases must have a minimum backup retention period of 7 days, unless this is a read replica and backups are handled by the primary. Fix: If this is a standalone production database, set 'backup_retention_period' to at least 7 days. If this is a read replica, ensure the primary has compliant backup retention."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/edge_cases.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 132
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "encryption_at_rest",
+          "level": "error",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' does not have encryption at rest enabled (storage_encrypted=false). All production databases must have storage_encrypted=true. Fix: Set storage_encrypted = true for this RDS instance."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "delete_protection",
+          "level": "error",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' does not have deletion protection enabled (deletion_protection=false). All production databases must have deletion_protection=true. Fix: Set deletion_protection = true for this RDS instance."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "backup_retention",
+          "level": "warning",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' has backup_retention_period=0. All production databases must have backup_retention_period >= 7 days. Fix: Set backup_retention_period to at least 7 for this RDS instance."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "automated_backups_enabled",
+          "level": "warning",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' has automated backups disabled (backup_retention_period=0). All production databases must have automated backups enabled (backup_retention_period > 0). Fix: Set backup_retention_period to a value greater than 0 for this RDS instance."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "multi_az_requirement",
+          "level": "warning",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' does not have Multi-AZ enabled (multi_az=false). All production databases must have multi_az=true. Fix: Set multi_az = true for this RDS instance."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "public_access_block",
+          "level": "error",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' is publicly accessible (publicly_accessible=true). All production databases must have publicly_accessible=false. Fix: Set publicly_accessible = false for this RDS instance."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "required_tagging",
+          "level": "note",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' is missing required tag 'Owner'. All resources must have Owner, Environment, and Application tags. Fix: Add the required tag 'Owner' to this resource."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "required_tagging",
+          "level": "note",
+          "message": {
+            "text": "RDS instance 'dev_db_unprotected' is missing required tag 'Application'. All resources must have Owner, Environment, and Application tags. Fix: Add the required tag 'Application' to this resource."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "kms_key_rotation",
+          "level": "warning",
+          "message": {
+            "text": "KMS key 'Legacy_Key_NoRotation' does not have automatic key rotation enabled (enable_key_rotation=false). All customer-managed KMS keys must have enable_key_rotation=true. Fix: Set enable_key_rotation = true for this KMS key."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 95
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "required_tagging",
+          "level": "note",
+          "message": {
+            "text": "KMS key 'Legacy_Key_NoRotation' is missing required tags: Environment, Owner, Application. All resources must have these tags. Fix: Add the required tags 'Environment', 'Owner', and 'Application' to this resource."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/mixed.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 95
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "automated_backups_enabled",
+          "level": "warning",
+          "message": {
+            "text": "Automated backups are not enabled for this RDS instance. The attribute 'backup_retention_period' is set to 0, which disables automated backups. All production database resources must have automated backups enabled. Fix: Set 'backup_retention_period' to a value greater than 0 to enable automated backups for this RDS instance."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/no_backup.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "backup_retention",
+          "level": "warning",
+          "message": {
+            "text": "Backup retention period for this RDS instance is less than the required minimum of 7 days. The attribute 'backup_retention_period' is set to 0. Fix: Set 'backup_retention_period' to at least 7 to comply with the backup retention policy for production databases."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/no_backup.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "delete_protection",
+          "level": "error",
+          "message": {
+            "text": "The aws_db_instance resource 'prod-api-db-primary' does not have deletion protection enabled. The 'deletion_protection' attribute is set to false, which violates the Deletion Protection Policy. All production database instances must have deletion protection enabled to prevent accidental deletion of critical data infrastructure. Fix: Set 'deletion_protection = true' in the aws_db_instance resource to enable deletion protection."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/no_delete_protection.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "encryption_at_rest",
+          "level": "error",
+          "message": {
+            "text": "The aws_db_instance resource 'prod-api-db-primary' does not have encryption at rest enabled. The attribute 'storage_encrypted' is set to false, which violates the Encryption at Rest Policy. Fix: Set 'storage_encrypted = true' for this RDS instance to enable encryption at rest."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/no_encryption.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "kms_key_rotation",
+          "level": "warning",
+          "message": {
+            "text": "KMS key does not have automatic key rotation enabled. The attribute 'enable_key_rotation' is set to false, which violates the KMS Key Rotation Policy. All customer-managed KMS keys must have automatic key rotation enabled to enhance cryptographic security. Fix: Set 'enable_key_rotation = true' for this aws_kms_key resource."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/no_kms_rotation.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "multi_az_requirement",
+          "level": "warning",
+          "message": {
+            "text": "Production RDS instance does not have Multi-AZ enabled. The 'multi_az' attribute is set to false, which does not meet the high availability requirements for production databases. Fix: Set 'multi_az = true' for this RDS instance to enable Multi-AZ deployment and ensure high availability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/no_multi_az.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "required_tagging",
+          "level": "note",
+          "message": {
+            "text": "The resource is missing one or more required tags. Mandatory tags are: Environment, Owner, and Application. The 'Owner' and 'Application' tags are missing. Fix: Add the required tags to the resource. Example: tags = { Environment = \"production\", Owner = \"team@example.com\", Application = \"your-app-name\" }"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/no_tags.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "allowed_regions",
+          "level": "warning",
+          "message": {
+            "text": "The AWS provider is configured to use region 'ap-southeast-3', which is not in the approved region list (us-east-1, us-east-2, us-west-1, us-west-2). Deploying resources in unauthorized regions can violate data residency and compliance requirements. Fix: Set the provider region to an approved region, such as 'us-east-1', 'us-east-2', 'us-west-1', or 'us-west-2'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "infrastructure/per_policy/wrong_region.tf",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 4
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
