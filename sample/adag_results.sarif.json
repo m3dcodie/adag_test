@@ -7,7 +7,7 @@
         "driver": {
           "name": "ADAG",
           "version": "0.1.0",
-          "informationUri": "https://github.com/your-org/adag",
+          "informationUri": "https://github.com/m3dcodie/arch_agent",
           "rules": []
         }
       },
