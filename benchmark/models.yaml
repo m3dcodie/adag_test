@@ -1,0 +1,218 @@
+# benchmark/models.yaml
+#
+# GitHub Copilot models for the adag benchmark.
+#
+# Billing model (effective June 1, 2026): usage-based per-token pricing.
+# 1 AI credit = $0.01 USD. All prices below are per 1M tokens (USD).
+# Source: https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing#pricing-tables
+#
+# pricing.included: true  — model is included in paid plan allowances (no extra charge within limits)
+# pricing.input_usd_per_1m  — cost per 1M input tokens
+# pricing.output_usd_per_1m — cost per 1M output tokens
+#
+# Actual USD cost per scan is parsed from arch_agent's core.cost_tracker log
+# lines ([COST] in stderr) — no extra config needed.
+#
+# To test only a subset, comment out unwanted entries.
+
+models:
+  # ── Included models (within plan allowances) ──────────────────────────────
+
+  - name: gpt-4.1-copilot
+    display_name: "GPT-4.1 (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-4.1
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-4.1
+    pricing:
+      tier: Versatile
+      included: true
+      input_usd_per_1m: 2.00
+      output_usd_per_1m: 8.00
+
+  - name: gpt-4o-copilot
+    display_name: "GPT-4o (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-4o
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-4o
+    pricing:
+      tier: Versatile
+      included: false
+      input_usd_per_1m: null # legacy model, not listed in new pricing table
+      output_usd_per_1m: null
+
+  - name: gpt-5-mini-copilot
+    display_name: "GPT-5 mini (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-5-mini
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-5-mini
+    pricing:
+      tier: Lightweight
+      included: true
+      input_usd_per_1m: 0.25
+      output_usd_per_1m: 2.00
+
+  - name: raptor-mini-copilot
+    display_name: "Raptor mini (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: raptor-mini
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: raptor-mini
+    pricing:
+      tier: Versatile
+      included: true # uses GPT-5 mini pricing per docs footnote
+      input_usd_per_1m: 0.25
+      output_usd_per_1m: 2.00
+
+  # ── Lightweight / low-cost ────────────────────────────────────────────────
+
+  - name: gpt-5.4-mini-copilot
+    display_name: "GPT-5.4 mini (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-5.4-mini
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-5.4-mini
+    pricing:
+      tier: Lightweight
+      included: false
+      input_usd_per_1m: 0.75
+      output_usd_per_1m: 4.50
+
+  - name: claude-haiku-4.5-copilot
+    display_name: "Claude Haiku 4.5 (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: claude-haiku-4.5
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: claude-haiku-4.5
+    pricing:
+      tier: Versatile
+      included: false
+      input_usd_per_1m: 1.00
+      output_usd_per_1m: 5.00
+
+  - name: gemini-3-flash-copilot
+    display_name: "Gemini 3 Flash (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gemini-3-flash
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gemini-3-flash
+    pricing:
+      tier: Lightweight
+      included: false
+      input_usd_per_1m: 0.50
+      output_usd_per_1m: 3.00
+
+  # ── Versatile / Powerful ──────────────────────────────────────────────────
+
+  - name: gpt-5.2-copilot
+    display_name: "GPT-5.2 (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-5.2
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-5.2
+    pricing:
+      tier: Versatile
+      included: false
+      input_usd_per_1m: 1.75
+      output_usd_per_1m: 14.00
+
+  - name: gpt-5.2-codex-copilot
+    display_name: "GPT-5.2-Codex (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-5.2-codex
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-5.2-codex
+    pricing:
+      tier: Powerful
+      included: false
+      input_usd_per_1m: 1.75
+      output_usd_per_1m: 14.00
+
+  - name: gpt-5.3-codex-copilot
+    display_name: "GPT-5.3-Codex (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-5.3-codex
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-5.3-codex
+    pricing:
+      tier: Powerful
+      included: false
+      input_usd_per_1m: 1.75
+      output_usd_per_1m: 14.00
+
+  - name: gpt-5.4-copilot
+    display_name: "GPT-5.4 (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gpt-5.4
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gpt-5.4
+    pricing:
+      tier: Versatile
+      included: false
+      input_usd_per_1m: 2.50
+      output_usd_per_1m: 15.00
+
+  - name: claude-sonnet-4.5-copilot
+    display_name: "Claude Sonnet 4.5 (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: claude-sonnet-4.5
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: claude-sonnet-4.5
+    pricing:
+      tier: Versatile
+      included: false
+      input_usd_per_1m: 3.00
+      output_usd_per_1m: 15.00
+
+  - name: claude-sonnet-4.6-copilot
+    display_name: "Claude Sonnet 4.6 (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: claude-sonnet-4.6
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: claude-sonnet-4.6
+    pricing:
+      tier: Versatile
+      included: false
+      input_usd_per_1m: 3.00
+      output_usd_per_1m: 15.00
+
+  - name: gemini-2.5-pro-copilot
+    display_name: "Gemini 2.5 Pro (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gemini-2.5-pro
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gemini-2.5-pro
+    pricing:
+      tier: Powerful
+      included: false
+      input_usd_per_1m: 1.25
+      output_usd_per_1m: 10.00
+
+  - name: gemini-3.1-pro-copilot
+    display_name: "Gemini 3.1 Pro (Copilot)"
+    env:
+      LLM_PROVIDER: github-copilot
+      GITHUB_COPILOT_MODEL: gemini-3.1-pro
+      INTAKE_MODEL: gpt-4.1
+      AUDITOR_MODEL: gemini-3.1-pro
+    pricing:
+      tier: Powerful
+      included: false
+      input_usd_per_1m: 2.00
+      output_usd_per_1m: 12.00

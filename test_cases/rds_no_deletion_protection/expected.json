@@ -1,0 +1,12 @@
+{
+  "description": "RDS instance with deletion_protection = false; all other policies satisfied",
+  "expected_outcome": "fail",
+  "expected_violations": [
+    {
+      "policy_ref": "delete_protection",
+      "resource_type": "aws_db_instance",
+      "resource_name": "prod-api-db-primary",
+      "note": "deletion_protection attribute is false"
+    }
+  ]
+}

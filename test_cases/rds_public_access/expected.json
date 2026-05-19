@@ -1,0 +1,12 @@
+{
+  "description": "RDS instance with publicly_accessible = true; all other policies satisfied",
+  "expected_outcome": "fail",
+  "expected_violations": [
+    {
+      "policy_ref": "public_access_block",
+      "resource_type": "aws_db_instance",
+      "resource_name": "prod-api-db-primary",
+      "note": "publicly_accessible is true"
+    }
+  ]
+}

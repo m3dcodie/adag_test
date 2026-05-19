@@ -1,0 +1,3608 @@
+{
+  "timestamp": "20260519_023207",
+  "results": [
+    {
+      "model_id": "gpt-4.1-copilot",
+      "model_display_name": "GPT-4.1 (Copilot)",
+      "premium_request_multiplier": 0,
+      "metrics": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 1,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.8,
+        "precision": 1.0,
+        "f1": 0.8889,
+        "accuracy": 0.8571,
+        "avg_latency_s": 5.36,
+        "total_cost_usd": 0.0673
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 5.91,
+          "cost": {
+            "input_tokens": 4580,
+            "output_tokens": 111,
+            "estimated_usd": 0.010048,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4.1"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.62,
+          "cost": {
+            "input_tokens": 4656,
+            "output_tokens": 7,
+            "estimated_usd": 0.009368,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4.1"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 5.29,
+          "cost": {
+            "input_tokens": 4507,
+            "output_tokens": 93,
+            "estimated_usd": 0.009758,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4.1"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 5.45,
+          "cost": {
+            "input_tokens": 4507,
+            "output_tokens": 93,
+            "estimated_usd": 0.009758,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4.1"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 4.86,
+          "cost": {
+            "input_tokens": 4714,
+            "output_tokens": 6,
+            "estimated_usd": 0.009476,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4.1"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.8,
+          "cost": {
+            "input_tokens": 4497,
+            "output_tokens": 6,
+            "estimated_usd": 0.009042,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4.1"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 5.62,
+          "cost": {
+            "input_tokens": 4473,
+            "output_tokens": 111,
+            "estimated_usd": 0.009834,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4.1"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-4o-copilot",
+      "model_display_name": "GPT-4o (Copilot)",
+      "premium_request_multiplier": 0,
+      "metrics": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 1,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.8,
+        "precision": 1.0,
+        "f1": 0.8889,
+        "accuracy": 0.8571,
+        "avg_latency_s": 5.8,
+        "total_cost_usd": 0.0838
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.47,
+          "cost": {
+            "input_tokens": 4580,
+            "output_tokens": 108,
+            "estimated_usd": 0.01253,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4o"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.71,
+          "cost": {
+            "input_tokens": 4656,
+            "output_tokens": 6,
+            "estimated_usd": 0.0117,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4o"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 5.87,
+          "cost": {
+            "input_tokens": 4507,
+            "output_tokens": 83,
+            "estimated_usd": 0.012098,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4o"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.06,
+          "cost": {
+            "input_tokens": 4507,
+            "output_tokens": 90,
+            "estimated_usd": 0.012167,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4o"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.22,
+          "cost": {
+            "input_tokens": 4714,
+            "output_tokens": 6,
+            "estimated_usd": 0.011845,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4o"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 5.23,
+          "cost": {
+            "input_tokens": 4497,
+            "output_tokens": 6,
+            "estimated_usd": 0.011303,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4o"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.05,
+          "cost": {
+            "input_tokens": 4473,
+            "output_tokens": 97,
+            "estimated_usd": 0.012153,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-4o"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-5-mini-copilot",
+      "model_display_name": "GPT-5 mini (Copilot)",
+      "premium_request_multiplier": 0,
+      "metrics": {
+        "tp": 4,
+        "fp": 1,
+        "fn": 1,
+        "tn": 1,
+        "errors": 0,
+        "recall": 0.8,
+        "precision": 0.8,
+        "f1": 0.8,
+        "accuracy": 0.7143,
+        "avg_latency_s": 19.0,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 16.8,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "kms_key_rotation"
+            ],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [
+              "kms_key_rotation"
+            ],
+            "classification": "FP",
+            "correct": false
+          },
+          "elapsed_s": 29.06,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 19.8,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 13.92,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 19.99,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "encryption_at_rest"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 16.57,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 16.88,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-5.4-mini-copilot",
+      "model_display_name": "GPT-5.4 mini (Copilot)",
+      "premium_request_multiplier": 0.33,
+      "metrics": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.2857,
+        "avg_latency_s": 3.97,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "iam_least_privilege"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.92,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 3.96,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "delete_protection"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.01,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.03,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 4.0,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.92,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.97,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "claude-haiku-4.5-copilot",
+      "model_display_name": "Claude Haiku 4.5 (Copilot)",
+      "premium_request_multiplier": 0.33,
+      "metrics": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 2,
+        "errors": 0,
+        "recall": 1.0,
+        "precision": 1.0,
+        "f1": 1.0,
+        "accuracy": 1.0,
+        "avg_latency_s": 6.32,
+        "total_cost_usd": 0.0391
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.91,
+          "cost": {
+            "input_tokens": 6217,
+            "output_tokens": 213,
+            "estimated_usd": 0.005826,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-haiku-4.5"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.46,
+          "cost": {
+            "input_tokens": 6313,
+            "output_tokens": 33,
+            "estimated_usd": 0.005182,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-haiku-4.5"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.1,
+          "cost": {
+            "input_tokens": 6119,
+            "output_tokens": 148,
+            "estimated_usd": 0.005487,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-haiku-4.5"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.5,
+          "cost": {
+            "input_tokens": 6119,
+            "output_tokens": 167,
+            "estimated_usd": 0.005563,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-haiku-4.5"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.41,
+          "cost": {
+            "input_tokens": 6410,
+            "output_tokens": 33,
+            "estimated_usd": 0.00526,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-haiku-4.5"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "encryption_at_rest",
+              "naming_conventions"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.55,
+          "cost": {
+            "input_tokens": 6124,
+            "output_tokens": 340,
+            "estimated_usd": 0.006259,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-haiku-4.5"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.28,
+          "cost": {
+            "input_tokens": 6073,
+            "output_tokens": 175,
+            "estimated_usd": 0.005558,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-haiku-4.5"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-5.5-copilot",
+      "model_display_name": "GPT-5.5 (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.2857,
+        "avg_latency_s": 4.01,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "iam_least_privilege"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.15,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 4.01,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "delete_protection"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.01,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.99,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 3.94,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.96,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.02,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-5.2-copilot",
+      "model_display_name": "GPT-5.2 (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 2,
+        "errors": 0,
+        "recall": 1.0,
+        "precision": 1.0,
+        "f1": 1.0,
+        "accuracy": 1.0,
+        "avg_latency_s": 7.06,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.74,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.86,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "delete_protection",
+              "required_tagging"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 8.6,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.29,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 4.74,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "encryption_at_rest"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.45,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "public_access_block",
+              "required_tagging"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 8.71,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-5.2-codex-copilot",
+      "model_display_name": "GPT-5.2-Codex (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 2,
+        "errors": 0,
+        "recall": 1.0,
+        "precision": 1.0,
+        "f1": 1.0,
+        "accuracy": 1.0,
+        "avg_latency_s": 8.21,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.28,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 9.73,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.83,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "public_access_block",
+              "required_tagging"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 8.15,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 6.56,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "encryption_at_rest"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.99,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.92,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-5.3-codex-copilot",
+      "model_display_name": "GPT-5.3-Codex (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 1,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.8,
+        "precision": 1.0,
+        "f1": 0.8889,
+        "accuracy": 0.8571,
+        "avg_latency_s": 6.57,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.03,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.6,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.53,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.49,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.54,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 5.42,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.37,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gpt-5.4-copilot",
+      "model_display_name": "GPT-5.4 (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 1,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.8,
+        "precision": 1.0,
+        "f1": 0.8889,
+        "accuracy": 0.8571,
+        "avg_latency_s": 6.89,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.17,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.0,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 5.9,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 6.85,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 4.86,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "encryption_at_rest"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 11.71,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "naming_conventions"
+            ],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 6.72,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "claude-sonnet-4.5-copilot",
+      "model_display_name": "Claude Sonnet 4.5 (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 2,
+        "errors": 0,
+        "recall": 1.0,
+        "precision": 1.0,
+        "f1": 1.0,
+        "accuracy": 1.0,
+        "avg_latency_s": 8.11,
+        "total_cost_usd": 0.1442
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.79,
+          "cost": {
+            "input_tokens": 6217,
+            "output_tokens": 191,
+            "estimated_usd": 0.021516,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-sonnet-4.5"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 6.24,
+          "cost": {
+            "input_tokens": 6313,
+            "output_tokens": 33,
+            "estimated_usd": 0.019434,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-sonnet-4.5"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.92,
+          "cost": {
+            "input_tokens": 6119,
+            "output_tokens": 147,
+            "estimated_usd": 0.020562,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-sonnet-4.5"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 8.31,
+          "cost": {
+            "input_tokens": 6119,
+            "output_tokens": 161,
+            "estimated_usd": 0.020772,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-sonnet-4.5"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 6.75,
+          "cost": {
+            "input_tokens": 6410,
+            "output_tokens": 33,
+            "estimated_usd": 0.019725,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-sonnet-4.5"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "encryption_at_rest"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 8.69,
+          "cost": {
+            "input_tokens": 6124,
+            "output_tokens": 187,
+            "estimated_usd": 0.021177,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-sonnet-4.5"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.04,
+          "cost": {
+            "input_tokens": 6073,
+            "output_tokens": 184,
+            "estimated_usd": 0.020979,
+            "agent_calls": 1,
+            "auditor_model_used": "claude-sonnet-4.5"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "claude-sonnet-4.6-copilot",
+      "model_display_name": "Claude Sonnet 4.6 (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 4,
+        "fp": 0,
+        "fn": 1,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.8,
+        "precision": 1.0,
+        "f1": 0.8889,
+        "accuracy": 0.8571,
+        "avg_latency_s": 8.77,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.44,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 6.24,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.85,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 13.08,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 5.96,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 6.05,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 12.74,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "gemini-2.5-pro-copilot",
+      "model_display_name": "Gemini 2.5 Pro (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "tn": 2,
+        "errors": 0,
+        "recall": 1.0,
+        "precision": 1.0,
+        "f1": 1.0,
+        "accuracy": 1.0,
+        "avg_latency_s": 15.23,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 13.04,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 12.0,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "delete_protection"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 14.37,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 29.83,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 10.95,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "encryption_at_rest"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 12.56,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "public_access_block"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 13.88,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "claude-opus-4.5-copilot",
+      "model_display_name": "Claude Opus 4.5 (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.2857,
+        "avg_latency_s": 3.98,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "iam_least_privilege"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.03,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 4.12,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "delete_protection"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.09,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.93,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 3.87,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.93,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.86,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    },
+    {
+      "model_id": "claude-opus-4.7-copilot",
+      "model_display_name": "Claude Opus 4.7 (Copilot)",
+      "premium_request_multiplier": 1,
+      "metrics": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "tn": 2,
+        "errors": 0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.2857,
+        "avg_latency_s": 3.98,
+        "total_cost_usd": null
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "iam_least_privilege"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.93,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 4.04,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "delete_protection"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.05,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 4.05,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 3.94,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "encryption_at_rest"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.93,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "error",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [
+              "public_access_block"
+            ],
+            "false_positives": [],
+            "classification": "FN",
+            "correct": false
+          },
+          "elapsed_s": 3.93,
+          "cost": {
+            "input_tokens": null,
+            "output_tokens": null,
+            "estimated_usd": null,
+            "auditor_model_used": null,
+            "note": "no [COST] lines found in stderr"
+          }
+        }
+      ]
+    }
+  ]
+}

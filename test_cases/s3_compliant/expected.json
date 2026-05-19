@@ -1,0 +1,5 @@
+{
+  "description": "Fully compliant S3 bucket — encryption, public access block, and required tags all satisfied",
+  "expected_outcome": "pass",
+  "expected_violations": []
+}

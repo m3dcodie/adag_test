@@ -1,0 +1,12 @@
+{
+  "description": "IAM inline role policy granting s3:* on resource '*' — wildcard resource violates least-privilege",
+  "expected_outcome": "fail",
+  "expected_violations": [
+    {
+      "policy_ref": "iam_least_privilege",
+      "resource_type": "aws_iam_role_policy",
+      "resource_name": "app-service-policy",
+      "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+    }
+  ]
+}

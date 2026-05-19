@@ -1,0 +1,5 @@
+{
+  "description": "Fully compliant RDS instance — all 10 policies satisfied",
+  "expected_outcome": "pass",
+  "expected_violations": []
+}

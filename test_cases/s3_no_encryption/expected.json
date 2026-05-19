@@ -1,0 +1,12 @@
+{
+  "description": "S3 bucket without server-side encryption configuration; public access block is present",
+  "expected_outcome": "fail",
+  "expected_violations": [
+    {
+      "policy_ref": "encryption_at_rest",
+      "resource_type": "aws_s3_bucket",
+      "resource_name": "app-data-store",
+      "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+    }
+  ]
+}

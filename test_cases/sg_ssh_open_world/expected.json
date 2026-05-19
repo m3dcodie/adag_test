@@ -1,0 +1,12 @@
+{
+  "description": "Security group with SSH (port 22) open to 0.0.0.0/0 — unrestricted ingress on sensitive port",
+  "expected_outcome": "fail",
+  "expected_violations": [
+    {
+      "policy_ref": "public_access_block",
+      "resource_type": "aws_security_group",
+      "resource_name": "app-server-sg",
+      "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+    }
+  ]
+}
