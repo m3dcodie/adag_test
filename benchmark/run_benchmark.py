@@ -219,15 +219,17 @@ import re
 # Matches lines like:
 # INFO     core.cost_tracker: [COST] provider=openai model=gpt-4.1 agent=auditor
 #   input_tokens=4117 output_tokens=6 total_tokens=4123 estimated_cost_usd=$0.008282 ...
-_COST_LINE_RE = re.compile(
+# Tokens are always present; cost may be "N/A (model not in pricing table)" for
+# unknown/new models, in which case we capture tokens but skip cost.
+_COST_TOKENS_RE = re.compile(
     r"\[COST\](?!\s+COMPARISON).*?"
     r"model=(\S+).*?"
     r"agent=(\S+).*?"
     r"input_tokens=(\d+).*?"
-    r"output_tokens=(\d+).*?"
-    r"estimated_cost_usd=\$([0-9.]+)",
+    r"output_tokens=(\d+)",
     re.DOTALL,
 )
+_COST_USD_RE = re.compile(r"estimated_cost_usd=\$([0-9.]+)")
 
 
 def parse_cost_from_stderr(stderr: str) -> dict:
@@ -237,30 +239,38 @@ def parse_cost_from_stderr(stderr: str) -> dict:
     core.cost_tracker emits one [COST] line per agent call (e.g. intake, auditor).
     We sum them to get the total cost and token counts for the full scan.
     [COST COMPARISON] lines are ignored — they list hypothetical costs for other models.
+
+    Token counts are extracted from all matching [COST] lines regardless of
+    whether the model is in the pricing table.  Cost is only summed when the
+    line contains a parseable dollar amount (models not in the pricing table
+    emit "N/A" for estimated_cost_usd, so their cost is treated as unknown).
     """
     total_input = 0
     total_output = 0
     total_cost = 0.0
-    matches = 0
+    has_cost = False
+    token_matches = 0
     auditor_models: list[str] = []
 
     for line in stderr.splitlines():
         if "[COST]" not in line or "[COST COMPARISON]" in line:
             continue
-        m = _COST_LINE_RE.search(line)
+        m = _COST_TOKENS_RE.search(line)
         if m:
             model_used = m.group(1)
             agent_name = m.group(2)
             total_input  += int(m.group(3))
             total_output += int(m.group(4))
-            total_cost   += float(m.group(5))
-            matches += 1
+            token_matches += 1
             if agent_name == "auditor":
                 auditor_models.append(model_used)
+            cost_m = _COST_USD_RE.search(line)
+            if cost_m:
+                total_cost += float(cost_m.group(1))
+                has_cost = True
 
-    if matches == 0:
+    if token_matches == 0:
         return {"input_tokens": None, "output_tokens": None, "estimated_usd": None,
-                "auditor_model_used": None,
                 "auditor_model_used": None,
                 "note": "no [COST] lines found in stderr"}
 
@@ -268,8 +278,8 @@ def parse_cost_from_stderr(stderr: str) -> dict:
     return {
         "input_tokens":  total_input,
         "output_tokens": total_output,
-        "estimated_usd": round(total_cost, 6),
-        "agent_calls":   matches,
+        "estimated_usd": round(total_cost, 6) if has_cost else None,
+        "agent_calls":   token_matches,
         "auditor_model_used": auditor_model_used,
     }
 
@@ -303,6 +313,14 @@ def compute_model_metrics(evaluations: list[dict]) -> dict:
              if e["cost"].get("estimated_usd") is not None]
     total_cost = round(sum(costs), 4) if costs else None
 
+    # Token totals
+    input_tokens = [e["cost"]["input_tokens"] for e in evaluations
+                    if e["cost"].get("input_tokens") is not None]
+    output_tokens = [e["cost"]["output_tokens"] for e in evaluations
+                     if e["cost"].get("output_tokens") is not None]
+    total_input_tokens  = sum(input_tokens)  if input_tokens  else None
+    total_output_tokens = sum(output_tokens) if output_tokens else None
+
     return {
         "tp": tp, "fp": fp, "fn": fn, "tn": tn, "errors": errors,
         "recall":    round(recall, 4),
@@ -311,6 +329,8 @@ def compute_model_metrics(evaluations: list[dict]) -> dict:
         "accuracy":  round(accuracy, 4),
         "avg_latency_s": round(avg_latency, 2),
         "total_cost_usd": total_cost,
+        "total_input_tokens":  total_input_tokens,
+        "total_output_tokens": total_output_tokens,
     }
 
 
@@ -329,10 +349,10 @@ def render_markdown(all_results: list[dict], timestamp: str) -> str:
     # ── Summary table ────────────────────────────────────────────────────────
     lines.append("## Summary\n")
     header = ("| Model | Tier | In $/1M | Out $/1M | Included | Recall | Precision | F1 | Accuracy "
-              "| TP | FP | FN | TN | Errors | Avg Latency | Total Cost |")
+              "| TP | FP | FN | TN | Errors | Avg Latency | Prompt Tokens (total) | Response Tokens (total) | Est. Cost (ref) |")
     sep    = ("|-------|------|---------|----------|----------|"
               "--------|-----------|----|---------|"
-              "----|----|----|----|----|-------------|------------|")
+              "----|----|----|----|----|-------------|---------------|-----------------|------------|")
     lines.append(header)
     lines.append(sep)
 
@@ -344,6 +364,8 @@ def render_markdown(all_results: list[dict], timestamp: str) -> str:
         inp  = f"${p['input_usd_per_1m']:.2f}" if p.get("input_usd_per_1m") is not None else "—"
         out  = f"${p['output_usd_per_1m']:.2f}" if p.get("output_usd_per_1m") is not None else "—"
         cost_str = f"${m['total_cost_usd']:.4f}" if m["total_cost_usd"] is not None else "N/A"
+        prompt_tok   = f"{m['total_input_tokens']:,}"  if m.get("total_input_tokens")  is not None else "N/A"
+        response_tok = f"{m['total_output_tokens']:,}" if m.get("total_output_tokens") is not None else "N/A"
         lines.append(
             f"| {r['model_display_name']} "
             f"| {tier} "
@@ -356,11 +378,13 @@ def render_markdown(all_results: list[dict], timestamp: str) -> str:
             f"| {m['accuracy']:.0%} "
             f"| {m['tp']} | {m['fp']} | {m['fn']} | {m['tn']} | {m['errors']} "
             f"| {m['avg_latency_s']}s "
+            f"| {prompt_tok} "
+            f"| {response_tok} "
             f"| {cost_str} |"
         )
 
     lines.append("\n> Pricing from [GitHub Copilot models and pricing](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing) (effective June 1, 2026). Per 1M tokens, 1 AI credit = $0.01 USD.")
-    lines.append("> **Included** ✅ = within plan allowance. **Total Cost** parsed from `core.cost_tracker` [COST] lines in adag stderr.\n")
+    lines.append("> **Included** ✅ = within plan allowance. **Total Cost** is a *reference estimate* computed from published per-token list prices — actual GitHub Copilot billing will be higher (typically 2–3×) due to GitHub's margin over underlying model costs. **Prompt/Response Tokens** are summed across all test-case scans in the run.\n")
 
     # ── Per-test-case breakdown ───────────────────────────────────────────────
     lines.append("## Per-Test-Case Breakdown\n")
@@ -412,11 +436,15 @@ def render_markdown(all_results: list[dict], timestamp: str) -> str:
 
 def print_summary_table(all_results: list[dict]) -> None:
     col_w = max(len(r["model_display_name"]) for r in all_results) + 2
-    header = f"{'Model':<{col_w}} {'Recall':>8} {'Precision':>10} {'F1':>6} {'TP':>4} {'FP':>4} {'FN':>4} {'TN':>4} {'Latency':>10}"
+    header = (f"{'Model':<{col_w}} {'Recall':>8} {'Precision':>10} {'F1':>6}"
+              f" {'TP':>4} {'FP':>4} {'FN':>4} {'TN':>4} {'Latency':>10}"
+              f" {'Prompt Tok (total)':>20} {'Resp Tok (total)':>18}")
     print("\n" + header)
     print("─" * len(header))
     for r in all_results:
         m = r["metrics"]
+        prompt_tok   = f"{m['total_input_tokens']:,}"  if m.get("total_input_tokens")  is not None else "N/A"
+        response_tok = f"{m['total_output_tokens']:,}" if m.get("total_output_tokens") is not None else "N/A"
         print(
             f"{r['model_display_name']:<{col_w}}"
             f" {m['recall']:>7.0%}"
@@ -427,6 +455,8 @@ def print_summary_table(all_results: list[dict]) -> None:
             f" {m['fn']:>4}"
             f" {m['tn']:>4}"
             f" {m['avg_latency_s']:>9.1f}s"
+            f" {prompt_tok:>20}"
+            f" {response_tok:>18}"
         )
     print()
 
@@ -457,6 +487,8 @@ def main() -> None:
     parser.add_argument("--recall-threshold", type=float, default=0.95,
                         help="Minimum acceptable recall (default: 0.95). "
                              "Exit 1 if any model is below this.")
+    parser.add_argument("--filter", metavar="PATTERN",
+                        help="Only run models whose name or display_name contains PATTERN (case-insensitive).")
     args = parser.parse_args()
 
     models_path    = repo_root / args.models
@@ -470,7 +502,14 @@ def main() -> None:
         print(f"[ERROR] Test cases directory not found: {test_cases_dir}", file=sys.stderr)
         sys.exit(1)
 
-    models     = load_models(models_path)
+    models = load_models(models_path)
+    if args.filter:
+        pat = args.filter.lower()
+        models = [m for m in models
+                  if pat in m["name"].lower() or pat in m.get("display_name", "").lower()]
+        if not models:
+            print(f"[ERROR] No models match filter {args.filter!r}", file=sys.stderr)
+            sys.exit(1)
     test_cases = load_test_cases(test_cases_dir)
 
     print(f"[INFO] Models: {len(models)}  |  Test cases: {len(test_cases)}")

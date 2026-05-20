@@ -1,0 +1,265 @@
+{
+  "timestamp": "20260520_014454",
+  "results": [
+    {
+      "model_id": "gpt-5.2-codex-copilot",
+      "model_display_name": "GPT-5.2-Codex (Copilot)",
+      "pricing": {
+        "tier": "Powerful",
+        "included": false,
+        "input_usd_per_1m": 1.75,
+        "output_usd_per_1m": 14.0
+      },
+      "metrics": {
+        "tp": 5,
+        "fp": 1,
+        "fn": 0,
+        "tn": 1,
+        "errors": 0,
+        "recall": 1.0,
+        "precision": 0.8333,
+        "f1": 0.9091,
+        "accuracy": 0.8571,
+        "avg_latency_s": 11.41,
+        "total_cost_usd": 0.1095,
+        "total_input_tokens": 27902,
+        "total_output_tokens": 4332
+      },
+      "evaluations": [
+        {
+          "test_case": "iam_wildcard_resource",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "iam_least_privilege",
+              "resource_type": "aws_iam_role_policy",
+              "resource_name": "app-service-policy",
+              "note": "Statement grants Action=s3:* on Resource=* (wildcard resource is forbidden)"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 1,
+            "actual_policy_refs": [
+              "iam_least_privilege"
+            ],
+            "policy_hits": [
+              "iam_least_privilege"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 7.39,
+          "cost": {
+            "input_tokens": 4004,
+            "output_tokens": 230,
+            "estimated_usd": 0.010227,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-5.2-codex"
+          }
+        },
+        {
+          "test_case": "rds_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 4,
+            "actual_policy_refs": [
+              "allowed_regions",
+              "required_tagging"
+            ],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [
+              "allowed_regions",
+              "required_tagging"
+            ],
+            "classification": "FP",
+            "correct": false
+          },
+          "elapsed_s": 20.31,
+          "cost": {
+            "input_tokens": 4080,
+            "output_tokens": 1399,
+            "estimated_usd": 0.026726,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-5.2-codex"
+          }
+        },
+        {
+          "test_case": "rds_no_deletion_protection",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "delete_protection",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "deletion_protection attribute is false"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "delete_protection",
+              "required_tagging"
+            ],
+            "policy_hits": [
+              "delete_protection"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.95,
+          "cost": {
+            "input_tokens": 3931,
+            "output_tokens": 407,
+            "estimated_usd": 0.012577,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-5.2-codex"
+          }
+        },
+        {
+          "test_case": "rds_public_access",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_db_instance",
+              "resource_name": "prod-api-db-primary",
+              "note": "publicly_accessible is true"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "public_access_block",
+              "required_tagging"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.36,
+          "cost": {
+            "input_tokens": 3931,
+            "output_tokens": 507,
+            "estimated_usd": 0.013977,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-5.2-codex"
+          }
+        },
+        {
+          "test_case": "s3_compliant",
+          "expected_outcome": "pass",
+          "expected_violations": [],
+          "result": {
+            "scan_error": false,
+            "actual_status": "passed",
+            "actual_violation_count": 0,
+            "actual_policy_refs": [],
+            "policy_hits": [],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TN",
+            "correct": true
+          },
+          "elapsed_s": 13.38,
+          "cost": {
+            "input_tokens": 4138,
+            "output_tokens": 745,
+            "estimated_usd": 0.017671,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-5.2-codex"
+          }
+        },
+        {
+          "test_case": "s3_no_encryption",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "encryption_at_rest",
+              "resource_type": "aws_s3_bucket",
+              "resource_name": "app-data-store",
+              "note": "no aws_s3_bucket_server_side_encryption_configuration resource present"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "encryption_at_rest",
+              "required_tagging"
+            ],
+            "policy_hits": [
+              "encryption_at_rest"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 10.36,
+          "cost": {
+            "input_tokens": 3921,
+            "output_tokens": 575,
+            "estimated_usd": 0.014912,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-5.2-codex"
+          }
+        },
+        {
+          "test_case": "sg_ssh_open_world",
+          "expected_outcome": "fail",
+          "expected_violations": [
+            {
+              "policy_ref": "public_access_block",
+              "resource_type": "aws_security_group",
+              "resource_name": "app-server-sg",
+              "note": "ingress rule allows port 22 from cidr_blocks=[0.0.0.0/0]"
+            }
+          ],
+          "result": {
+            "scan_error": false,
+            "actual_status": "failed",
+            "actual_violation_count": 2,
+            "actual_policy_refs": [
+              "public_access_block",
+              "required_tagging"
+            ],
+            "policy_hits": [
+              "public_access_block"
+            ],
+            "policy_misses": [],
+            "false_positives": [],
+            "classification": "TP",
+            "correct": true
+          },
+          "elapsed_s": 9.09,
+          "cost": {
+            "input_tokens": 3897,
+            "output_tokens": 469,
+            "estimated_usd": 0.013386,
+            "agent_calls": 1,
+            "auditor_model_used": "gpt-5.2-codex"
+          }
+        }
+      ]
+    }
+  ]
+}
